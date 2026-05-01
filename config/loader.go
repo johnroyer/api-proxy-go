@@ -1,6 +1,11 @@
 package config
 
-import "os"
+import (
+	"errors"
+	"os"
+
+	"github.com/pelletier/go-toml/v2"
+)
 
 type Config struct {
 	Server struct {
@@ -22,5 +27,24 @@ func fileIsExist() bool {
 		return true
 	} else {
 		return false
+	}
+}
+
+func LoadConfig() (*Config, error) {
+	if !fileIsExist() {
+		return nil, errors.New("Config file not found")
+	}
+
+	configText, _ := os.ReadFile("./config.toml")
+	if nil == configText {
+		return nil, errors.New("Config file is not readable")
+	}
+
+	var config Config
+	err := toml.Unmarshal(configText, &config)
+	if nil == err {
+		return nil, errors.New("Failed to parse config file")
+	} else {
+		return &config, nil
 	}
 }
