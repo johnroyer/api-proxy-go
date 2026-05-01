@@ -1,0 +1,10 @@
+[service]
+address=
+port=
+
+[auth]
+allowTokens = [
+]
+
+[proxy]
+timeout = "10"  # in seconds
