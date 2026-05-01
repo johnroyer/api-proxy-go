@@ -22,8 +22,8 @@ type Config struct {
 	}
 }
 
-func fileIsExist() bool {
-	if _, err := os.Stat("./config.toml"); err == nil {
+func fileIsExist(path string) bool {
+	if _, err := os.Stat(path); err == nil {
 		return true
 	} else {
 		return false
