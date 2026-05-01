@@ -2,9 +2,9 @@
 address=
 port=
 
+[proxy]
+timeout = "10"  # in seconds
+
 [auth]
 allowTokens = [
 ]
-
-[proxy]
-timeout = "10"  # in seconds
