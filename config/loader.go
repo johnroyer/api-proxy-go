@@ -30,12 +30,12 @@ func fileIsExist(path string) bool {
 	}
 }
 
-func LoadConfig() (*Config, error) {
-	if !fileIsExist() {
+func LoadConfig(path string) (*Config, error) {
+	if !fileIsExist(path) {
 		return nil, errors.New("Config file not found")
 	}
 
-	configText, _ := os.ReadFile("./config.toml")
+	configText, _ := os.ReadFile(path)
 	if nil == configText {
 		return nil, errors.New("Config file is not readable")
 	}
