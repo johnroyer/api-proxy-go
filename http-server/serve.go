@@ -4,6 +4,7 @@ import (
 	"api-proxy-go/auth"
 	"encoding/json"
 	"net/http"
+	"strings"
 )
 
 type UserInput struct {
@@ -53,6 +54,14 @@ func RequestHandler(w http.ResponseWriter, r *http.Request, availableTokens *map
 		if err != nil {
 			print(err.Error())
 			return
+		}
+	}
+	// must HTTP
+	if strings.HasPrefix(strings.ToLower(url), "http") == false {
+		w.WriteHeader(http.StatusInternalServerError)
+		_, err := w.Write([]byte("URL must start with http"))
+		if err != nil {
+			print(err.Error())
 		}
 	}
 
