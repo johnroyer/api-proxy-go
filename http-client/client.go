@@ -11,7 +11,7 @@ type Response struct {
 	Body       []byte
 }
 
-func NewRequest(method, url string, header map[string]string) *Request {
+func SendRequest(method, url string, header map[string]string) *Request {
 	return &Request{
 		Method: method,
 		Url:    url,
