@@ -29,3 +29,13 @@ func getTargetUrl(httpRequest *http.Request) string {
 	}
 	return userInput.Url
 }
+
+func RequestHandler(w http.ResponseWriter, r *http.Request) {
+	// 先檢查 bearer token
+
+	// 尋找 request 中的 url 參數
+
+	// fetch URL
+
+	// 建立 response
+}
