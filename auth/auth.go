@@ -1,6 +1,8 @@
 package auth
 
-import "api-proxy-go/config"
+import (
+	"api-proxy-go/config"
+)
 
 type Tokens struct {
 	token string
@@ -21,9 +23,9 @@ func IsValid(token string, allowTokens *map[string]bool) bool {
 		return false
 	}
 
-	_, ok := (*allowTokens)[token]
-	if ok != false {
+	if _, ok := (*allowTokens)[token]; ok {
+		return true
+	} else {
 		return false
 	}
-	return true
 }
