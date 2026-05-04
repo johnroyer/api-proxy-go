@@ -3,7 +3,9 @@ package main
 import (
 	"api-proxy-go/config"
 	http_server "api-proxy-go/http-server"
+	"log"
 	"net/http"
+	"strconv"
 )
 
 func main() {
@@ -22,6 +24,11 @@ func main() {
 	handler := http_server.Handler{
 		AvailableTokens: &availableTokens,
 	}
-
-	http.Handle("/", &handler)
+	listen := userConfig.Server.Address + ":" + strconv.Itoa(userConfig.Server.Port)
+	server := http.ListenAndServe(
+		listen,
+		&handler,
+	)
+	println("server start on " + listen)
+	log.Fatal(server)
 }
