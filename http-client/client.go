@@ -15,10 +15,23 @@ type ProxyResponse struct {
 	Body       []byte
 }
 
-func SendRequest(method, url string, header map[string]string) *Request {
-	return &Request{
-		Method: method,
-		Url:    url,
-		Header: header,
+func SendRequest(req ProxyRequest) ProxyResponse {
+	httpReq, err := http.NewRequest(req.Method, req.Url, nil)
+	if err != nil {
+		return ProxyResponse{StatusCode: 500, Body: []byte("Error creating request")}
 	}
+
+	client := &http.Client{}
+	response, err := client.Do(httpReq)
+	if err != nil {
+		return ProxyResponse{StatusCode: 500, Body: []byte("Error sending request")}
+	}
+
+	statusCode := response.StatusCode
+	htmlBytes, err := io.ReadAll(response.Body)
+	if err != nil {
+		return ProxyResponse{StatusCode: 500, Body: []byte("Error reading response body")}
+	}
+
+	return ProxyResponse{StatusCode: statusCode, Body: htmlBytes}
 }
