@@ -45,6 +45,16 @@ func RequestHandler(w http.ResponseWriter, r *http.Request, availableTokens *map
 	}
 
 	// 尋找 request 中的 url 參數
+	url := getTargetUrl(r)
+	if url == "" {
+		// return HTTP 500
+		w.WriteHeader(http.StatusInternalServerError)
+		_, err := w.Write([]byte("invalid target url"))
+		if err != nil {
+			print(err.Error())
+			return
+		}
+	}
 
 	// fetch URL
 
