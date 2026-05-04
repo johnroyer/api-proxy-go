@@ -13,7 +13,7 @@ type UserInput struct {
 }
 
 type HttpHandler struct {
-	availableTokens *map[string]bool
+	AvailableTokens *map[string]bool
 }
 
 func getBearerToken(r *http.Request) string {
