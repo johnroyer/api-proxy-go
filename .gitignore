@@ -7,6 +7,7 @@
 *.dll
 *.so
 *.dylib
+api-proxy-go
 
 # Test binary, built with `go test -c`
 *.test
