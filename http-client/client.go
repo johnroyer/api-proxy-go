@@ -1,12 +1,16 @@
 package http_client
 
-type Request struct {
+import (
+	"io"
+	"net/http"
+)
+
+type ProxyRequest struct {
 	Method string
 	Url    string
-	Header map[string]string
 }
 
-type Response struct {
+type ProxyResponse struct {
 	StatusCode int
 	Body       []byte
 }
