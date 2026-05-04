@@ -19,7 +19,7 @@ func main() {
 		availableTokens[userConfig.Auth.Tokens[i]] = true
 	}
 
-	handler := &http_server.HttpHandler{
+	handler := http_server.Handler{
 		AvailableTokens: &availableTokens,
 	}
 
