@@ -3,7 +3,7 @@ address=""
 port=
 
 [proxy]
-timeout = "10"  # in seconds
+timeout = 10  # in seconds
 
 [auth]
 allowAccessTokens = [
