@@ -2,7 +2,7 @@ package http_server
 
 import (
 	"api-proxy-go/auth"
-	http_client "api-proxy-go/http-client"
+	"api-proxy-go/http-client"
 	"encoding/json"
 	"net/http"
 	"strings"
@@ -82,8 +82,22 @@ func RequestHandler(w http.ResponseWriter, r *http.Request, availableTokens *map
 		}
 	}
 
+	html := []byte("")
+	if response == nil {
+		html = []byte("")
+	} else {
+		html := response.Body
+		if html == nil {
+			html = []byte("")
+		}
+	}
+
 	// 建立 response
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "text/html")
-	w.Write(response.Body)
+	_, err = w.Write(html)
+	if err != nil {
+		print(err.Error())
+		return
+	}
 }
