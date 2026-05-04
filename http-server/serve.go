@@ -60,6 +60,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			print(err.Error())
 			return
 		}
+		return
 	}
 	// must HTTP
 	if strings.HasPrefix(strings.ToLower(url), "http") == false {
@@ -68,6 +69,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			print(err.Error())
 		}
+		return
 	}
 
 	// fetch URL
@@ -84,6 +86,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			print(err.Error())
 			return
 		}
+		return
 	}
 
 	html := []byte("")
