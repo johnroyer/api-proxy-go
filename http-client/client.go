@@ -15,7 +15,7 @@ type ProxyResponse struct {
 	Body       []byte
 }
 
-func SendRequest(req ProxyRequest) (*ProxyResponse, error) {
+func Fetch(req ProxyRequest) (*ProxyResponse, error) {
 	httpReq, err := http.NewRequest(req.Method, req.Url, nil)
 	if err != nil {
 		return &ProxyResponse{StatusCode: 500, Body: []byte("Error creating request")}, err
