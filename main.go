@@ -1,16 +1,27 @@
 package main
 
-import http_client "api-proxy-go/http-client"
+import (
+	"api-proxy-go/config"
+	http_server "api-proxy-go/http-server"
+	"net/http"
+)
 
 func main() {
-	response, err := http_client.SendRequest(
-		http_client.ProxyRequest{
-			Method: "GET",
-			Url:    "https://zeroplex.tw/ip",
-		})
-	if err != nil {
-		println("error occures: " + err.Error())
+	// read config
+	userConfig, err := config.LoadConfig("./config.toml")
+	if err != nil || userConfig == nil {
+		println("failed to read config")
+		return
 	}
 
-	print(string(response.Body))
+	availableTokens := map[string]bool{}
+	for i := 0; i < len(userConfig.Auth.Tokens); i++ {
+		availableTokens[userConfig.Auth.Tokens[i]] = true
+	}
+
+	handler := &http_server.HttpHandler{
+		AvailableTokens: &availableTokens,
+	}
+
+	http.Handle("/", &handler)
 }
