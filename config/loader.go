@@ -36,7 +36,7 @@ func LoadConfig(path string) (*Config, error) {
 	}
 
 	configText, _ := os.ReadFile(path)
-	if nil == configText {
+	if configText == nil {
 		return nil, errors.New("Config file is not readable")
 	}
 
