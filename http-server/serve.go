@@ -49,7 +49,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-	if !auth.IsValid(accessToken, h.AvailableTokens) {
+	if auth.IsValid(accessToken, h.AvailableTokens) == false {
 		// return HTTP 500
 		w.WriteHeader(http.StatusInternalServerError)
 		_, err := w.Write([]byte("invalid access token"))
