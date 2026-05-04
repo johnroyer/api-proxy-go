@@ -2,6 +2,7 @@ package http_server
 
 import (
 	"api-proxy-go/auth"
+	http_client "api-proxy-go/http-client"
 	"encoding/json"
 	"net/http"
 	"strings"
@@ -66,6 +67,23 @@ func RequestHandler(w http.ResponseWriter, r *http.Request, availableTokens *map
 	}
 
 	// fetch URL
+	request := http_client.ProxyRequest{
+		Method: "GET",
+		Url:    url,
+	}
+	response, err := http_client.Fetch(request)
+	if err != nil {
+		// return HTTP 500
+		w.WriteHeader(http.StatusInternalServerError)
+		_, err := w.Write([]byte("invalid target url"))
+		if err != nil {
+			print(err.Error())
+			return
+		}
+	}
 
 	// 建立 response
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "text/html")
+	w.Write(response.Body)
 }
