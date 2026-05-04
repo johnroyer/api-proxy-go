@@ -40,11 +40,11 @@ func LoadConfig(path string) (*Config, error) {
 		return nil, errors.New("Config file is not readable")
 	}
 
-	var config Config
-	err := toml.Unmarshal(configText, &config)
-	if nil == err {
-		return nil, errors.New("Failed to parse config file")
-	} else {
-		return &config, nil
+	var userConfig Config
+	err := toml.Unmarshal(configText, &userConfig)
+	if err != nil {
+		println(err.Error())
+		return nil, errors.New("failed to parse config")
 	}
+	return &userConfig, nil
 }
