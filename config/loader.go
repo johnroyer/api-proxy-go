@@ -9,16 +9,16 @@ import (
 
 type Config struct {
 	Server struct {
-		Address string
-		Port    int
+		Address string `toml:"address"`
+		Port    int    `toml:"port"`
 	}
 
 	Proxy struct {
-		Timeout int
+		Timeout int `toml:"timeout"`
 	}
 
 	Auth struct {
-		Tokens []string
+		Tokens []string `toml:"allowAccessTokens"`
 	}
 }
 
