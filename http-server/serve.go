@@ -99,18 +99,10 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	html := []byte("")
-	if response == nil {
-		html = []byte("")
-	} else {
-		html := response.Body
-		if html == nil {
-			html = []byte("")
-		}
-	}
-
 	// 建立 response
-	w.WriteHeader(http.StatusOK)
+	statusCode := response.StatusCode
+	html := response.Body
+	w.WriteHeader(statusCode)
 	w.Header().Set("Content-Type", "text/html")
 	_, err = w.Write(html)
 	if err != nil {
