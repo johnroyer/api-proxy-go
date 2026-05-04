@@ -40,7 +40,16 @@ func getTargetUrl(httpRequest *http.Request) string {
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// 先檢查 bearer token
 	accessToken := getBearerToken(r)
-	if auth.IsValid(accessToken, h.AvailableTokens) == false {
+	if accessToken == "" {
+		w.WriteHeader(http.StatusInternalServerError)
+		_, err := w.Write([]byte("access token required"))
+		if err != nil {
+			print(err.Error())
+			return
+		}
+		return
+	}
+	if !auth.IsValid(accessToken, h.AvailableTokens) {
 		// return HTTP 500
 		w.WriteHeader(http.StatusInternalServerError)
 		_, err := w.Write([]byte("invalid access token"))
@@ -48,6 +57,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			print(err.Error())
 			return
 		}
+		return
 	}
 
 	// 尋找 request 中的 url 參數
