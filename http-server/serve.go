@@ -35,6 +35,7 @@ func RequestHandler(w http.ResponseWriter, r *http.Request, availableTokens *map
 	// 先檢查 bearer token
 	accessToken := getBearerToken(r)
 	if auth.IsValid(accessToken, availableTokens) == false {
+		// return HTTP 500
 		w.WriteHeader(http.StatusInternalServerError)
 		_, err := w.Write([]byte("invalid access token"))
 		if err != nil {
