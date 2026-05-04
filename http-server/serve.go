@@ -12,7 +12,7 @@ type UserInput struct {
 	Url string `json:"url"`
 }
 
-type HttpHandler struct {
+type Handler struct {
 	AvailableTokens *map[string]bool
 }
 
@@ -37,10 +37,10 @@ func getTargetUrl(httpRequest *http.Request) string {
 	return userInput.Url
 }
 
-func (h *HttpHandler) RequestHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// 先檢查 bearer token
 	accessToken := getBearerToken(r)
-	if auth.IsValid(accessToken, h.availableTokens) == false {
+	if auth.IsValid(accessToken, h.AvailableTokens) == false {
 		// return HTTP 500
 		w.WriteHeader(http.StatusInternalServerError)
 		_, err := w.Write([]byte("invalid access token"))
