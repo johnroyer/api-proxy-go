@@ -1,4 +1,4 @@
-[service]
+[server]
 address=
 port=
 
@@ -6,5 +6,5 @@ port=
 timeout = "10"  # in seconds
 
 [auth]
-allowTokens = [
+allowAccessTokens = [
 ]
