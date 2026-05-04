@@ -1,5 +1,5 @@
 [server]
-address=
+address=""
 port=
 
 [proxy]
