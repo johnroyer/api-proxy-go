@@ -24,11 +24,11 @@ func main() {
 	handler := http_server.Handler{
 		AvailableTokens: &availableTokens,
 	}
+
 	listen := userConfig.Server.Address + ":" + strconv.Itoa(userConfig.Server.Port)
-	server := http.ListenAndServe(
-		listen,
-		&handler,
-	)
-	println("server start on " + listen)
-	log.Fatal(server)
+	println("server starting on " + listen)
+	err = http.ListenAndServe(listen, &handler)
+	if err != nil {
+		log.Fatal("server failed: ", err)
+	}
 }
