@@ -2,7 +2,7 @@ package http_client
 
 type Request struct {
 	Method string
-	URL    string
+	Url    string
 	Header map[string]string
 }
 
@@ -14,7 +14,7 @@ type Response struct {
 func NewRequest(method, url string, header map[string]string) *Request {
 	return &Request{
 		Method: method,
-		URL:    url,
+		Url:    url,
 		Header: header,
 	}
 }
