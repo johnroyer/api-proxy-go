@@ -1,6 +1,7 @@
 package http_server
 
 import (
+	"api-proxy-go/auth"
 	"encoding/json"
 	"net/http"
 )
@@ -30,8 +31,17 @@ func getTargetUrl(httpRequest *http.Request) string {
 	return userInput.Url
 }
 
-func RequestHandler(w http.ResponseWriter, r *http.Request) {
+func RequestHandler(w http.ResponseWriter, r *http.Request, availableTokens *map[string]bool) {
 	// 先檢查 bearer token
+	accessToken := getBearerToken(r)
+	if auth.IsValid(accessToken, availableTokens) == false {
+		w.WriteHeader(http.StatusInternalServerError)
+		_, err := w.Write([]byte("invalid access token"))
+		if err != nil {
+			print(err.Error())
+			return
+		}
+	}
 
 	// 尋找 request 中的 url 參數
 
