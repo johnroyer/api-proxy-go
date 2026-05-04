@@ -3,8 +3,9 @@ package http_server
 import "net/http"
 
 type UserInput struct {
-	Url string
+	Url string `json:"url"`
 }
+
 func getBearerToken(r *http.Request) string {
 	token := r.Header.Get("Authorization")
 	if token == "" {
