@@ -8,6 +8,7 @@
 *.so
 *.dylib
 api-proxy-go
+config.toml
 
 # Test binary, built with `go test -c`
 *.test
