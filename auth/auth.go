@@ -15,3 +15,8 @@ func readFromConfig(config config.Config) (map[string]bool, error) {
 	}
 	return tokens, nil
 }
+
+func IsValid(token string, allowTokens map[string]bool) bool {
+	_, exists := allowTokens[token]
+	return exists
+}
