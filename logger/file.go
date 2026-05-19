@@ -15,3 +15,7 @@ func IsWritable(filePath string) bool {
 	defer file.Close()
 	return true
 }
+
+func IsAvailable(filePath string) bool {
+	return IsExists(filePath) && IsWritable(filePath)
+}
