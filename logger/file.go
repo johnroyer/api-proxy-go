@@ -1,6 +1,9 @@
 package logger
 
-import "os"
+import (
+	"fmt"
+	"os"
+)
 
 func IsExists(filePath string) bool {
 	_, err := os.Stat(filePath)
@@ -32,9 +35,27 @@ func CreateLogChannel(bufferSize int) chan LogData {
 func Handle(logChannel chan LogData, filePath string) {
 	logFile, err := os.OpenFile(filePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	if err != nil {
-		return false
+		return
 	}
 	defer logFile.Close()
 
-	return true
+	for logData := range logChannel {
+		if _, err := fmt.Fprintf(
+			logFile,
+			"%s [%s] %s %d %s\n",
+			logData.datetime,
+			logData.Level,
+			logData.RemoteAddr,
+			logData.HttpStatus,
+			logData.Url,
+		); err != nil {
+			return
+		}
+
+		if err := logFile.Sync(); err != nil {
+			return
+		}
+	}
+
+	return
 }
