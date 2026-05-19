@@ -29,7 +29,7 @@ func CreateLogChannel(bufferSize int) chan LogData {
 
 // 從 channel 中讀取 logData 並寫入指定的檔案
 // 此 func 預計放進 goroutine
-func Handle(logChannel chan LogData, filePath string) bool {
+func Handle(logChannel chan LogData, filePath string) {
 	logFile, err := os.OpenFile(filePath, os.O_APPEND, 0644)
 	if err != nil {
 		return false
