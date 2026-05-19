@@ -19,3 +19,15 @@ func IsWritable(filePath string) bool {
 func IsAvailable(filePath string) bool {
 	return IsExists(filePath) && IsWritable(filePath)
 }
+
+// 從 channel 中讀取 logData 並寫入指定的檔案
+// 此 func 預計放進 goroutine
+func Handle(logChannel chan LogData, filePath string) bool {
+	logFile, err := os.OpenFile(filePath, os.O_APPEND, 0644)
+	if err != nil {
+		return false
+	}
+	defer logFile.Close()
+
+	return true
+}
