@@ -20,6 +20,13 @@ func IsAvailable(filePath string) bool {
 	return IsExists(filePath) && IsWritable(filePath)
 }
 
+func CreateLogChannel(bufferSize int) chan LogData {
+	if bufferSize <= 10 {
+		return make(chan LogData, 10)
+	}
+	return make(chan LogData, bufferSize)
+}
+
 // 從 channel 中讀取 logData 並寫入指定的檔案
 // 此 func 預計放進 goroutine
 func Handle(logChannel chan LogData, filePath string) bool {
